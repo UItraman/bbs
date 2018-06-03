@@ -1,4 +1,28 @@
-secret_key = 'secret'
+class Config:
+    SECRET_KEY = 'secret'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
-_db_path = 'bbs.sqlite'     # 生产服务器，先手动修改 'mysql+pymysql://root:pwd@localhost/bbs'
-db_uri = 'sqlite:///{}'.format(_db_path)
+    @staticmethod
+    def init_app(app):
+        pass
+
+
+class DevelopmentConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///bbs.sqlite'
+
+
+class TestingConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'sqlite://'
+
+
+class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:pwd@localhost/bbs'
+
+
+config = {
+    'development': DevelopmentConfig,
+    'testing': TestingConfig,
+    'production': ProductionConfig,
+
+    'default': DevelopmentConfig
+}

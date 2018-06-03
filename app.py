@@ -25,12 +25,10 @@ def register_routes(app):
     app.register_blueprint(routes_comment, url_prefix='/comment')
 
 
-def configured_app():
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-    # secret key 和 数据库配置都放在 config.py 里面
-    import config
-    app.secret_key = config.secret_key
-    app.config['SQLALCHEMY_DATABASE_URI'] = config.db_uri
+def configured_app(config_name):
+    from config import config
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
     # 初始化 db
     db.init_app(app)
     # 注册路由
@@ -54,7 +52,7 @@ def configure_log(app):
 # 自定义的命令行命令用来运行服务器
 @manager.command
 def server():
-    app = configured_app()
+    app = configured_app('default')
     config = dict(
         debug=True,
         host='0.0.0.0',
@@ -70,5 +68,5 @@ def configure_manager():
 
 if __name__ == '__main__':
     configure_manager()
-    configured_app()
+    configured_app('default')
     manager.run()
