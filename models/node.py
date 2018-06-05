@@ -13,3 +13,4 @@ class Node(db.Model, ModelMixin):
 
     def __init__(self, form):
         self.name = form.get('name', '')
+        self.description = form.get('description', '')

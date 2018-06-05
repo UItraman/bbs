@@ -16,10 +16,10 @@ manager = Manager(app)
 def register_routes(app):
     from routes.node import main as routes_node
     from routes.topic import main as routes_topic
-    from routes.auth import main as routes_auth
+    from routes.user import main as routes_user
     from routes.comment import main as routes_comment
 
-    app.register_blueprint(routes_auth, url_prefix='/auth')
+    app.register_blueprint(routes_user, url_prefix='/user')
     app.register_blueprint(routes_node, url_prefix='/node')
     app.register_blueprint(routes_topic, url_prefix='/topic')
     app.register_blueprint(routes_comment, url_prefix='/comment')

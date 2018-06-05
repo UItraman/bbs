@@ -15,7 +15,7 @@
 
     {% for node in node_list %}
     <div>
-        {{ node.id }} : {{ node.name }}
+        {{ node.id }} : <a href="{{ url_for('node.show', id=node.id) }}">{{ node.name }}</a>
     </div>
     {% endfor %}
 {% endblock %}
@@ -23,6 +23,5 @@
 
 {% block sidebar %}
     <h1>hello </h1>
-    <a href="/node/new">发布新帖子</a>
+    <a href="/node/new">创建新节点</a>
 {% endblock %}
-

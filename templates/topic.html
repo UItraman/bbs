@@ -18,7 +18,9 @@
     <div class="bbs-comments">
         {% for c in topic.comments %}
         <div>
-            {{ c.content }}
+            <p>{{ c.content }}</p>
+            <a href="/user/profile">{{ c.user.username }}</a>
+            回复于： {{ c.created_time }}
         </div>
         {% endfor %}
     </div>

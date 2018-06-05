@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block title %}
-    发帖
+    {{ node.name }}
 {% endblock %}
 
 {% block content %}
+    <h1>{{ node.name }}</h1>
+    <p>{{ node.description }}</p>
     {% for t in node.topics %}
     <div>
         <a href="{{ url_for('topic.show', id=t.id) }}">
@@ -13,6 +15,3 @@
     </div>
     {% endfor %}
 {% endblock %}
-
-
-

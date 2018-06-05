@@ -1,11 +1,25 @@
 from models.comment import Comment
 from routes import *
 
+from functools import wraps
+
+from routes.user import current_user
+
 
 main = Blueprint('comment', __name__)
 
 Model = Comment
 
+
+def login_required(f):
+    @wraps(f)
+    def function(*args, **kwargs):
+        # your code
+        u = current_user()
+        if u is None:
+            return redirect(url_for('user.login_view'))
+        return f(*args, **kwargs)
+    return function
 #
 # @main.route('/')
 # def index():
@@ -31,11 +45,20 @@ Model = Comment
 
 
 @main.route('/add', methods=['POST'])
+@login_required
 def add():
     form = request.form
+    u = current_user()
     m = Model(form)
     m.topic_id = int(form.get('topic_id'))
-    m.save()
+    m.auth_id = u.id
+    if m.valid():
+        m.save()
+    else:
+        print('评论不能为空')
+    # change topic.comments_num
+    m.topic.comments_num += 1
+    m.topic.save()
     return redirect(url_for('topic.show', id=m.topic_id))
 
 
