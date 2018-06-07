@@ -5,31 +5,54 @@
 {% endblock %}
 
 {% block content %}
-    <div class="">
-        <a href="{{url_for('node.show', id=topic.node.id)}}">{{ topic.node.name }}</a>
-    </div>
-    <div>
-        <h1>{{ topic.title }}</h1>
-        <p>
-            {{ topic.content}}
-        </p>
-    </div>
-
-    <div class="bbs-comments">
-        {% for c in topic.comments %}
-        <div>
-            <p>{{ c.content }}</p>
-            <a href="/user/profile">{{ c.user.username }}</a>
-            回复于： {{ c.created_time }}
+    <div class="pure-g gua-main">
+        <div class="pure-u-3-4 gua-center">
+            <!-- 问题 -->
+            <div class="gua-block gua-activity">
+                <img class="gua-avatar" src="/uploads/avatar/default.gif">
+                <div class="gua-title">
+                    {{ topic.title }}
+                </div>
+                <div>
+                    <a href="/user/profile/756">{{ topic.user.username }}</a>
+                    更新于： {{ topic.created_time }}
+                </div>
+                <div id="id-wrap-question">
+                    <div class="gua-problem-cell">
+                        <h3>帖子描述</h3>
+                        <div class="markdown-body gua-auto-cell" data-key="expectation">
+                            <p>{{ topic.content}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 所有回答 -->
+            {% for c in topic.comments %}
+            <div id="id-block-answer">
+                <div class="gua-block gua-answer gua-activity" data-id="5454">
+                    <img class="gua-avatar" src="/uploads/avatar/54.png">
+                    <div>
+                        <a href="/user/profile/">{{ c.user.username }}</a>
+                        回复于： {{ c.created_time }}
+                    </div>
+                    <div class="markdown-body" data-answer_id="5454">
+                        <p>{{ c.content }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- 添加回答 -->
+            <div class="gua-block">
+                <div id="id-form-answer-new">
+                    <form action="{{ url_for('comment.add') }}" method="post">
+                        <textarea class="gua-full gua-input gua-content" placeholder="输入回复内容" name="content"></textarea>
+                        <input type="hidden" name="topic_id" value="{{ topic.id }}">
+                        <button id="id-button-submit" class="pure-button pure-button-primary gua-full">发表回复</button>
+                    </form>
+                    <br><br><br><br>
+                </div>
+            </div>
         </div>
-        {% endfor %}
     </div>
 
-    <div>
-        <form action="{{ url_for('comment.add') }}" method="post">
-            <input type="hidden" name="topic_id" value="{{ topic.id }}">
-            <textarea name="content"></textarea>
-            <button>发表回复</button>
-        </form>
-    </div>
 {% endblock %}

@@ -5,13 +5,34 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ node.name }}</h1>
-    <p>{{ node.description }}</p>
-    {% for t in node.topics %}
-    <div>
-        <a href="{{ url_for('topic.show', id=t.id) }}">
-            {{ t.title }}
-        </a>
+    <div class="pure-g gua-main">
+        <div class="pure-u-3-4 gua-center">
+            <h1>{{ node.name }}</h1>
+            <p>{{ node.description }}</p>
+            <div id="id-question-container" class="gua-auto-list">
+                {% for topic in node.topics %}
+                <div id="id-topic-{{ topic.id }}" class="gua-block gua-activity">
+                    <img class="gua-avatar" src="{{ topic.user.avatar }}">
+                    <div class="gua-title">
+                        <a class="gua-topic-link" href="{{ url_for('topic.show', id=topic.id) }}">
+                            <div class="gua-topic-title">
+                                {{ topic.title }}
+                            </div>
+                        </a>
+                        <div class="gua-topic-time gua-auto-form">
+                            <a class="gua-topic-link" href="{{ url_for('topic.show', id=topic.id) }}"></a>
+                            <a href="/user/profile">{{ topic.user.username }}</a>
+                            更新于： {{ topic.created_time }}
+                            <!-- 这里应该只有管理员才能删除, 标记解决 -->
+                        </div>
+
+                        <div class="gua-topic-views">
+                            {{ topic.comments_num }} / {{ topic.read_num }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-    {% endfor %}
 {% endblock %}

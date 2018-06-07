@@ -14,11 +14,13 @@ manager = Manager(app)
 
 
 def register_routes(app):
+    from routes.index import main as routes_index
     from routes.node import main as routes_node
     from routes.topic import main as routes_topic
     from routes.user import main as routes_user
     from routes.comment import main as routes_comment
 
+    app.register_blueprint(routes_index, url_prefix='/')
     app.register_blueprint(routes_user, url_prefix='/user')
     app.register_blueprint(routes_node, url_prefix='/node')
     app.register_blueprint(routes_topic, url_prefix='/topic')
@@ -26,7 +28,7 @@ def register_routes(app):
 
 
 def configured_app(config_name):
-    from config import config
+    from config.config import config
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
     # 初始化 db

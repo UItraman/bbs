@@ -13,26 +13,28 @@
     {% block script %}{% endblock %}
 </head>
 <body>
-    <div class="bbs-top">
-        <a href="/node/">主页</a>
-        <nav class="bbs-menu">
-            <a class="gua-nav-link gua-active" href="/node">首页</a>
-            <a class="gua-nav-link" href="{{ url_for('user.login_view') }}">注册</a>
-            <a class="gua-nav-link" href="{{ url_for('user.login_view') }}">登录</a>
-            <a class="gua-nav-link" href="{{ url_for('user.logout') }}">登出</a>
-            <a class="gua-nav-link" href="{{ url_for('user.profile') }}">个人主页</a>
-        </nav>
-    </div>
-    <div class="bbs-main">
-        <div class="bbs-content bbs-box">
-            {% block content %}
-            {% endblock %}
+    <nav id="id-nav">
+        <a class="gua-nav-link gua-active" href="/node">首页</a>
+        <a class="gua-nav-link" href="{{ url_for('user.login_view') }}">注册</a>
+        <a class="gua-nav-link" href="{{ url_for('user.login_view') }}">登录</a>
+        <a class="gua-nav-link" href="{{ url_for('user.logout') }}">登出</a>
+        <a class="gua-nav-link gua-right" href="{{ url_for('user.profile') }}">个人主页</a>
+        <a class="gua-nav-image gua-right" href="/user/profile">
+            <img class="gua-avatar" src="static/img/default.jpg">
+            <span style="display: none" id="id-span-current-user" data-id="147" data-is_admin="false" data-username="宇宙无敌奥特曼" data-qq="540380798" data-email="540380798@qq.com" data-avatar="/uploads/avatar/147.jpg"></span>
+        </a>
+    </nav>
+
+    <div class="main">
+        <div class="sidebar">
+            <ul id="id-ul-board">
+                <a href="/topic/new">发布新帖子</a>
+                {% block sidebar %}
+                {% endblock %}
+            </ul>
         </div>
-        <div class="bbs-sidebar bbs-box">
-            <a href="/topic/new">发布新帖子</a>
-            {% block sidebar %}
-            {% endblock %}
-        </div>
+        {% block content %}
+        {% endblock %}
     </div>
 
     <div class="bbs-bottom">

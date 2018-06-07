@@ -1,25 +1,10 @@
 from models.topic import Topic
 from routes import *
 
-from functools import wraps
-
-from routes.user import current_user
-
 
 main = Blueprint('topic', __name__)
 
 Model = Topic
-
-
-def login_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        # your code
-        u = current_user()
-        if u is None:
-            return redirect(url_for('user.login_view'))
-        return f(*args, **kwargs)
-    return function
 
 
 @main.route('/')

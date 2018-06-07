@@ -2,32 +2,10 @@ from models.user import User
 # from models.topic import Topic
 from routes import *
 
-# for decorators
-from functools import wraps
-
 
 main = Blueprint('user', __name__)
 
 Model = User
-
-
-def current_user():
-    uid = session.get('uid')
-    if uid is not None:
-        u = User.query.get(uid)
-        return u
-
-
-def admin_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        # your code
-        print('admin required')
-        if request.args.get('uid') != '1':
-            print('not admin')
-            abort(404)
-        return f(*args, **kwargs)
-    return function
 
 
 @main.route('/')
@@ -44,7 +22,7 @@ def login():
     if u.valid_login(user):
         session.permanent = True
         session['uid'] = user.id
-        return redirect('/nodes')
+        return redirect(url_for('index.index'))
     else:
         return redirect(url_for('.login_view'))
 
@@ -64,9 +42,9 @@ def register():
 
 @main.route('/logout')
 def logout():
-    session.permanent = False
-    session['uid'] = None
-    return redirect('/node')
+    p = session.pop('uid')
+    print('logout: pop uid', p)
+    return redirect(url_for('index.index'))
 
 
 @main.route('/update_password', methods=['POST'])
@@ -82,6 +60,7 @@ def update_password():
 
 
 @main.route('/update_avatar', methods=['POST'])
+@login_required
 def update_avatar():
     u = current_user()
     avatar = request.form.get('avatar', '')

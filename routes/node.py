@@ -2,25 +2,10 @@ from models.node import Node
 from models.topic import Topic
 from routes import *
 
-# for decorators
-from functools import wraps
-
 
 main = Blueprint('node', __name__)
 
 Model = Node
-
-
-def admin_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        # your code
-        print('admin required')
-        if request.args.get('uid') != '1':
-            print('not admin')
-            abort(404)
-        return f(*args, **kwargs)
-    return function
 
 
 @main.route('/')
