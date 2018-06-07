@@ -9,7 +9,7 @@
         <div class="pure-u-3-4 gua-center">
             <!-- 问题 -->
             <div class="gua-block gua-activity">
-                <img class="gua-avatar" src="/uploads/avatar/default.gif">
+                <img class="gua-avatar" src="{{ topic.user.avatar }}">
                 <div class="gua-title">
                     {{ topic.title }}
                 </div>
@@ -30,7 +30,7 @@
             {% for c in topic.comments %}
             <div id="id-block-answer">
                 <div class="gua-block gua-answer gua-activity" data-id="5454">
-                    <img class="gua-avatar" src="/uploads/avatar/54.png">
+                    <img class="gua-avatar" src="{{ c.user.avatar }}">
                     <div>
                         <a href="/user/profile/">{{ c.user.username }}</a>
                         回复于： {{ c.created_time }}

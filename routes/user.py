@@ -35,7 +35,7 @@ def register():
         u.save()
         session.permanent = True
         session['uid'] = u.id
-        return redirect('/node/')
+        return redirect(url_for('index.index'))
     else:
         return redirect(url_for('.login_view'))
 
@@ -47,6 +47,18 @@ def logout():
     return redirect(url_for('index.index'))
 
 
+@main.route('/update_username', methods=['POST'])
+def update_username():
+    u = current_user()
+    username = request.form.get('username', '')
+    print('username', username)
+    if u.change_username(username):
+        print('修改成功')
+    else:
+        print('用户名修改失败')
+    return redirect(url_for('user.profile'))
+
+
 @main.route('/update_password', methods=['POST'])
 def update_password():
     u = current_user()
@@ -56,7 +68,7 @@ def update_password():
         print('修改成功')
     else:
         print('用户密码修改失败')
-    return redirect('/profile')
+    return redirect(url_for('user.profile'))
 
 
 @main.route('/update_avatar', methods=['POST'])
@@ -68,8 +80,8 @@ def update_avatar():
     if u.change_avatar(avatar):
         print('修改成功')
     else:
-        print('用户密码修改失败')
-    return redirect('/profile')
+        print('用户头像修改失败')
+    return redirect(url_for('user.profile'))
 
 
 @main.route('/profile', methods=['GET'])

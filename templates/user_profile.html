@@ -10,13 +10,13 @@
         <div class="gua-block">
             <img class="gua-avatar" src="{{ user.avatar }}">
             <div>
-                <div>
+                <!-- <div>
                     <form class="pure-form" action="/avatar/add" method="post" enctype="multipart/form-data">
                         选择头像：
                         <input name="file" accept="image/*" type="file">
                         <input value="上传" type="submit">
                     </form>
-                </div>
+                </div> -->
                 <div>
                   <form action="/user/update_avatar" method="post">
                     头像地址：
@@ -25,7 +25,7 @@
                   </form>
                 </div>
                 <div>
-                    <form method="post" action="/user/update">
+                    <form method="post" action="/user/update_username">
                         <label for="username">用户名：</label>
                         <input value="{{ user.username }}" name="username" id="id-input-username">
                         <button id="id-button-modsignature">更新用户名</button>
@@ -39,10 +39,10 @@
                     </form>
                 </div>
             </div>
-            <div>
+            <!-- <div>
                 <a href="/questions/user/147">发帖列表 ： 2</a>
             </div>
-            <div>回帖： 11</div>
+            <div>回帖： 11</div> -->
         </div>
      </div>
 </div>

@@ -19,7 +19,7 @@ class User(db.Model, ModelMixin):
         super(User, self).__init__()
         self.username = form.get('username', '')
         self.password = form.get('password', '')
-        self.avatar = form.get('avatar', 'static/img/aoteman7.jpg')
+        self.avatar = form.get('avatar', '/static/img/aoteman7.jpg')
 
     def valid_login(self, u):
         if u is not None:
@@ -62,6 +62,14 @@ class User(db.Model, ModelMixin):
     def change_avatar(self, avatar):
         if len(avatar) > 2:
             self.avatar = avatar
+            self.save()
+            return True
+        else:
+            return False
+
+    def change_username(self, username):
+        if len(username) > 2:
+            self.username = username
             self.save()
             return True
         else:

@@ -8,6 +8,7 @@ from flask import session
 from flask import url_for
 from flask import abort
 
+from models.user import User
 # for decorators
 from functools import wraps
 
